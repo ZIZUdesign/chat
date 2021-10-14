@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <title>Chat App</title>
-    <link rel="stylesheet" href="tachyons.min.css">
+ 
    
     <body>
         <div id="message">
@@ -15,21 +15,23 @@
               placeholder="Your message...">
         </form>
 
+        <script >
+            new window.EventSource('/sse').onmessage= function (event){
+            window.message.innerHTML += `<p>${event.data}</p>`
+        }
+        
+          window.dataForm.addEventListner('submit', function(evt){
+            evt.preventDefault()
+        
+            window.fetch(`/chat?message=${window.input.value}`)
+            window.input.value = ''
+        
+        })
+                </script>
+
     </body>
         
         
-        <script >
-    new window.EventSource('/sse').onmessage= function (event){
-    window.message.innerHTML += `<p>${event.data}</p>`
-}
-
-  window.dataForm.addEventListner('submit', function(evt){
-    evt.preventDefault()
-
-    window.fetch(`/chat?message=${window.input.value}`)
-    window.input.value = ''
-
-})
-        </script>
+      
    
 </html>
